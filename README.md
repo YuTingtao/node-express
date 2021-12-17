@@ -1,2 +1,2 @@
 # NODE SERVE
-npm run serve
+启动服务命令：npm run serve
