@@ -5,7 +5,7 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/users', (req, res, next) => {
+router.get('/list', (req, res, next) => {
     res.json({
         status: 200,
         data: [
