@@ -21,5 +21,5 @@ app.use('/', routes);
 
 // 监听端口
 app.listen(port, () => {
-    console.log(`服务启动成功: http://localhost:${port}`);
+    console.log(`启动成功: http://localhost:${port}`);
 });
