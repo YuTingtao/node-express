@@ -1,25 +1,44 @@
-var express = require('express');
-var app = express();
-var port = 3000;
-var routes = require('./routes/index.js');
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const routes = require('./routes/index.js')
 
-// 设置静态文件目录
-app.use(express.static('public'));
+// 静态文件目录
+app.use(express.static('./public'))
 
-// 设置响应头
+// 解析请求体JSON格式数据
+app.use(express.json())
+
+// 解析请求体urlencodeed格式数据
+app.use(express.urlencoded({ extended: false }))
+
+// cors解决跨域
+app.use(cors())
+
 app.all('*', (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-    res.header('Access-Control-Allow-Headers', 'token');
-    // res.header('Content-Type', 'application/json;charset=utf-8');
-    next();
-});
+    // 设置响应头
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+    next()
+})
+
+app.get('/', (req, res) => {
+    res.send('Express Server!')
+})
 
 // 使用路由
-app.use('/', routes);
+app.use('/api', routes)
+
+// 错误中间件
+app.use((err, req, res, next) => {
+    res.send({
+        status: 500,
+        msg: err.message
+    })
+})
 
 // 监听端口
+const port = 80
 app.listen(port, () => {
-    console.log(`启动成功: http://localhost:${port}`);
-});
+    console.log(`启动成功: http://127.0.0.1:${port}`)
+})

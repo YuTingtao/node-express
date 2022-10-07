@@ -1,15 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var user = require('./user.js');
+const express = require('express')
+const router = express.Router()
+const user = require('./user/index.js')
 
+// 中间件
 router.use((req, res, next) => {
-    next();
-});
+    next()
+})
 
-router.get('/', (req, res, next) => {
-    res.send('Node Serve')
-});
+router.use('/user', user)
 
-router.use('/user', user);
-
-module.exports = router;
+module.exports = router
