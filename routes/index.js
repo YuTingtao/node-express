@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const user = require('./user/index.js')
+const userRoutes = require('./modules/user.js')
 
 // 中间件
-router.use((req, res, next) => {
-    next()
-})
+// router.use((req, res, next) => {
+//     next()
+// })
 
-router.use('/user', user)
+router.use('/user', userRoutes)
 
 module.exports = router

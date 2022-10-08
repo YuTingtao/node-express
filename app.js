@@ -26,6 +26,17 @@ app.get('/', (req, res) => {
     res.send('Express Server!')
 })
 
+// res.cc中间件
+app.use((req, res, next) => {
+    res.cc = function(err, status = 0) {
+        res.send({
+            status: status,
+            message: err instanceof Error ? err.message : err
+        })
+    }
+    next()
+})
+
 // 使用路由
 app.use('/api', routes)
 
@@ -33,7 +44,7 @@ app.use('/api', routes)
 app.use((err, req, res, next) => {
     res.send({
         status: 500,
-        msg: err.message
+        message: err.message
     })
 })
 
