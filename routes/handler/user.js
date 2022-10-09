@@ -1,11 +1,11 @@
-const db = require('../../db/index.js')
+const db = require('@/db/index.js')
 const bcrypt = require('bcryptjs')
 
 // 注册处理函数
 exports.register = (req, res) => {
     const { body } = req
     if (!body.username || !body.password) {
-        return res.cc('用户名或密码不能为空')
+        return res.cc('用户名或密码不能为空！')
     }
     // 查询用户名是否被占用
     const sql = 'select * from users where username=?'
@@ -14,10 +14,10 @@ exports.register = (req, res) => {
             return res.cc(err)
         }
         if (results.length > 0) {
-            return res.cc('用户名已存在')
+            return res.cc('用户名已存在！')
         }
         // 密码加密
-        body.password = bcrypt.hashSync(body.password, 10)
+        // body.password = bcrypt.hashSync(body.password, 10)
         const sql = 'insert into users set ?'
         db.query(sql, { username: body.username, password: body.password }, (err, results) => {
             if (err) {
@@ -33,7 +33,26 @@ exports.register = (req, res) => {
 
 // 登录处理函数
 exports.login = (req, res) => {
-    res.send({
-        status: 200
+    const { body } = req
+    if (!body.username || !body.password) {
+        return res.cc('用户名或密码不能为空！')
+    }
+    const sql = 'select * from users where username=?'
+    db.query(sql, body.username, (err, results) => {
+        if (err) {
+            return res.cc(err)
+        }
+        if (results.length === 0) {
+            return res.cc('用户不存在！')
+        }
+        // const compare = bcrypt.compareSync(body.password, results[0].password)
+        if (body.password !== results[0].password) {
+            return res.cc('用户名或密码不正确')
+        }
+        res.send({
+            status: 200,
+            message: '请求成功！',
+            data: results[0]
+        })
     })
 }
