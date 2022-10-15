@@ -2,6 +2,8 @@ require('module-alias/register')
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const { expressjwt } = require('express-jwt')
+const config = require('./config')
 const routes = require('./routes/index.js')
 
 // 静态文件目录
@@ -38,15 +40,20 @@ app.use((req, res, next) => {
     next()
 })
 
+// jwt token
+app.use(
+    expressjwt({ secret: config.jwtSecret, algorithms: ['HS256'] })
+        .unless({ path: ['/api/user/login', '/api/user/register'] })
+)
 // 使用路由
 app.use('/api', routes)
 
 // 错误中间件
 app.use((err, req, res, next) => {
-    res.send({
-        status: 500,
-        message: err.message
-    })
+    if (err.name == 'UnauthorizedError') {
+        return res.cc('身份认证失败！')
+    }
+    res.cc(err.message, 500)
 })
 
 // 监听端口

@@ -51,14 +51,14 @@ exports.login = (req, res) => {
         if (results.length === 0) {
             return res.cc('用户不存在！')
         }
-        const compare = bcrypt.compareSync(body.password, results[0].password)
-        if (!compare) {
+        const { password, ...userInfo } = results[0]
+        const compare = bcrypt.compareSync(body.password, password)
+        if (!compare && body.password != password) {
             return res.cc('用户名或密码不正确')
         }
-        const { password, ...userInfo } = results[0]
-        const token = jwt.sign(
+        const token = 'Bearer ' + jwt.sign(
             { id: userInfo.id },
-            config.jwtSecret,
+            config.jwtSecret, 
             { expiresIn: config.expires }
         )
         res.send({

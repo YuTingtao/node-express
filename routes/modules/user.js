@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const userHandler = require('../handler/user.js')
+const handler = require('../handler/user.js')
 
 // 注册
-router.post('/register', userHandler.register)
+router.post('/register', handler.register)
 
 // 登录
-router.post('/login', userHandler.login)
+router.post('/login', handler.login)
 
 module.exports = router
