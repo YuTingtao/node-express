@@ -1,12 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const userRoutes = require('./modules/user.js')
 
-// 中间件
-// router.use((req, res, next) => {
-//     next()
-// })
-
+// 用户模块
+const userRoutes = require('./user/index.js')
 router.use('/user', userRoutes)
 
 module.exports = router

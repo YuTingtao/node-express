@@ -1,27 +1,17 @@
 {
-  "name": "node_express",
+  "name": "express-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "Express app",
+  "private": true,
+  "main": "index.js",
   "scripts": {
-    "run dev": "nodemon app.js",
-    "run serve": "node app.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
-  "author": "",
-  "license": "MIT",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "express": "^4.18.1",
-    "express-jwt": "^7.7.5",
-    "jsonwebtoken": "^8.5.1",
-    "module-alias": "^2.2.2",
-    "mysql": "^2.18.1"
+    "express": "^4.21.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
-  },
-  "_moduleAliases": {
-    "@": "."
+    "nodemon": "^3.1.9"
   }
 }
