@@ -3,7 +3,7 @@ const app = express()
 
 // 主机、端口号
 const host = '127.0.0.1'
-const port = 3000
+const port = 4000
 
 // 静态文件
 app.use(express.static('public'))
